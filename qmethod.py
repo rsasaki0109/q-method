@@ -9,17 +9,10 @@ def qmethod(w,v,P):
         #   観測ベクトルw[3×n]
         #output
         #   クオータニオンq[4×1]求める
-        use_ind = np.zeros(36)
-        for i in range(0, 36):
-            if all(w[:, i])==True:
-                use_ind[i] = 1
-            else:
-                use_ind[i] = 0
         B = np.zeros((3, 3))
         sig = 0
         z = np.zeros(3)
-        a = P/sum(P*use_ind)
-        a = a*use_ind
+        a = P/sum(P)
 
         w_2 = np.zeros(3)
         v_2 = np.zeros(3)
