@@ -55,9 +55,9 @@ def qmethod_test():
                       [sin(50), cos(50), 0],
                       [0, 0, 1]
                         ])        
-        w = np.ones((3, 36))
+        w = np.ones((3, 30))
         v = np.dot(R,w)
-        P = np.ones(36)*0.01
+        P = np.ones(30)*0.01
     　　　
         q=qmethod(w,v,P)
         print(q)
