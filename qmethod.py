@@ -8,7 +8,7 @@ def qmethod(w,v,P):
         #   基準ベクトルv[3×n]
         #   観測ベクトルw[3×n]
         #output
-        #   クオータニオンq[4×1]求める
+        #   quatunion  q[4×1]
         B = np.zeros((3, 3))
         sig = 0
         z = np.zeros(3)
