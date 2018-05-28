@@ -1,5 +1,5 @@
 # q-method  
-this is test code.  
+this is a test code.  
 q-method is a robust attitude estimation method.  
-it estimates a quaternion to minimize Wahba's loss function.  
+it estimates quaternion to minimize Wahba's loss function.  
 
