@@ -52,7 +52,7 @@ def qmethod_test():
         v = np.dot(R, w)
         P = np.ones(30)*0.01
 
-        q=qmethod(w, v, P)
+        q = qmethod(w, v, P)
         print(q)
 
 qmethod_test()    
