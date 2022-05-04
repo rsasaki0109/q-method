@@ -1,18 +1,18 @@
 import numpy as np
 from math import sin, cos
 
-def qmethod(w,v,P):
-        #q-method
-        #estimate q to minimize Wahba's loss function
-        #input
+def qmethod(w, v, P):
+        # q-method
+        # estimate q to minimize Wahba's loss function
+        # input
         #   基準ベクトルv[3×n]
         #   観測ベクトルw[3×n]
-        #output
+        # output
         #   quatunion  q[4×1]
         B = np.zeros((3, 3))
         sig = 0
         z = np.zeros(3)
-        a = P/sum(P)
+        a = P / sum(P)
 
         w_2 = np.zeros(3)
         v_2 = np.zeros(3)
@@ -21,12 +21,12 @@ def qmethod(w,v,P):
 
             w_2 = w[:, i]
             v_2 = v[:, i]
-            B += a[i]*np.tensordot(w_2, v_2, axes=0)
-            sig += a[i]*np.dot(w_2, v_2)
-            z += a[i]*np.cross(w_2, v_2)
+            B += a[i] * np.tensordot(w_2, v_2, axes=0)
+            sig += a[i] * np.dot(w_2, v_2)
+            z += a[i] * np.cross(w_2, v_2)
 
-        S = B+B.T
-        A_11 = S-sig*np.eye(3)
+        S = B + B.T
+        A_11 = S - sig*np.eye(3)
         A_12 = np.c_[z]
         A_21 = z
         A_22 = sig
@@ -37,7 +37,7 @@ def qmethod(w,v,P):
         K = np.append(A_1, np.array([A_2]), axis=0)
         eig, V = np.linalg.eig(K)
         ind = np.argsort(eig)
-        V = V[:, ind]/np.tile(np.sqrt(np.sum(np.power(V, 2), axis=1)) , (4, 1))
+        V = V[:, ind] / np.tile(np.sqrt(np.sum(np.power(V, 2), axis=1)) , (4, 1))
         q_ = V[:, 3]
 
         return np.array([-q_[0], -q_[1], -q_[2], q_[3]])
@@ -49,12 +49,10 @@ def qmethod_test():
                       [0, 0, 1]
                         ])        
         w = np.ones((3, 30))
-        v = np.dot(R,w)
+        v = np.dot(R, w)
         P = np.ones(30)*0.01
-    　　　
-        q=qmethod(w,v,P)
+
+        q=qmethod(w, v, P)
         print(q)
 
-qmethod_test()
-
-    
+qmethod_test()    
