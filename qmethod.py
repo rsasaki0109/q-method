@@ -1,12 +1,14 @@
 import numpy as np
 from math import sin, cos
 
+from scipy.spatial.transform import Rotation as Rot
+
 def qmethod(w, v, P):
         # q-method
         # estimate q to minimize Wahba's loss function
         # input
-        #   基準ベクトルv[3×n]
-        #   観測ベクトルw[3×n]
+        # ref vector v[3×n]
+        # obs vector w[3×n]
         # output
         #   quatunion  q[4×1]
         B = np.zeros((3, 3))
@@ -43,16 +45,42 @@ def qmethod(w, v, P):
         return np.array([-q_[0], -q_[1], -q_[2], q_[3]])
 
 def qmethod_test():
+        r0 = Rot.from_euler('zyx', [50, 0, 0], degrees=True)
+        print("--r0--")
+        print(r0.as_quat())
+        print(r0.as_euler('zyx', degrees=True))
+        print(r0.as_matrix())
         R = np.array([
-                      [cos(50), -sin(50), 0],
-                      [sin(50), cos(50), 0],
+                      [cos(50 * np.pi / 180), -sin(50 * np.pi / 180), 0],
+                      [sin(50 * np.pi / 180), cos(50 * np.pi / 180), 0],
                       [0, 0, 1]
-                        ])        
-        w = np.ones((3, 30))
+                #       [cos(50 * np.pi / 180), -sin(50 * np.pi / 180), 0],
+                #       [sin(50 * np.pi / 180), cos(50 * np.pi / 180), 0],
+                #       [0, 0, 1]
+                        ])       
+        print("--R--")
+        print(R)
+        #w = np.ones((3, 30))
+        w = np.ones((3, 1))
+        print("w")
+        print(w)
         v = np.dot(R, w)
-        P = np.ones(30)*0.01
+        print("v")
+        print(v)
+        #P = np.ones(30)*0.01
+        P = np.ones(1)*0.01
 
         q = qmethod(w, v, P)
+        print("--q--")
         print(q)
+        r1 = Rot.from_quat([q[1], q[2], q[3], q[0]])
+        print("--r1--")
+        print(r1.as_quat())
+        print(r1.as_euler('zyx', degrees=True))
+
+        r2 = Rot.from_quat([q[0], q[1], q[2], q[3]])
+        print("--r2--")
+        print(r2.as_quat())
+        print(r2.as_euler('zyx', degrees=True))
 
 qmethod_test()    
