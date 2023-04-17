@@ -39,4 +39,6 @@ v
 ![Result](image/result.png)
 
 # Reference  
-・	人工衛星の力学と制御ハンドブック，姿勢制御研究委員会（編）  
+ - 人工衛星の力学と制御ハンドブック，姿勢制御研究委員会（編）  
+ - [Wahba's problem](https://en.wikipedia.org/wiki/Wahba%27s_problem)
+
