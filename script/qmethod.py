@@ -1,6 +1,7 @@
 import numpy as np
 from math import sin, cos
-
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 from scipy.spatial.transform import Rotation as Rot
 
 def qmethod(w, v, P):
@@ -50,29 +51,23 @@ def qmethod_test():
         print(r0.as_quat())
         print(r0.as_euler('zyx', degrees=True))
         print(r0.as_matrix())
-        R = np.array([
-                      [cos(50 * np.pi / 180), -sin(50 * np.pi / 180), 0],
-                      [sin(50 * np.pi / 180), cos(50 * np.pi / 180), 0],
-                      [0, 0, 1]
-                #       [cos(50 * np.pi / 180), -sin(50 * np.pi / 180), 0],
-                #       [sin(50 * np.pi / 180), cos(50 * np.pi / 180), 0],
-                #       [0, 0, 1]
-                        ])       
-        print("--R--")
-        print(R)
-        #w = np.ones((3, 30))
-        w = np.ones((3, 1))
+        
+        R = r0.as_matrix()
+
+        w = np.array([[1.0], [0.0], [0.0]])
         print("w")
         print(w)
+        
         v = np.dot(R, w)
         print("v")
         print(v)
-        #P = np.ones(30)*0.01
+        
         P = np.ones(1)*0.01
 
         q = qmethod(w, v, P)
         print("--q--")
         print(q)
+        
         r1 = Rot.from_quat([q[1], q[2], q[3], q[0]])
         print("--r1--")
         print(r1.as_quat())
@@ -82,5 +77,31 @@ def qmethod_test():
         print("--r2--")
         print(r2.as_quat())
         print(r2.as_euler('zyx', degrees=True))
+
+        # Visualization
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+
+        # Plot w
+        for i in range(w.shape[1]):
+                ax.quiver(0, 0, 0, w[0, i], w[1, i], w[2, i], color='b', label='w' if i == 0 else "")
+
+        # Plot v
+        for i in range(v.shape[1]):
+                ax.quiver(0, 0, 0, v[0, i], v[1, i], v[2, i], color='r', label='v' if i == 0 else "")
+
+        # Calculate v_est
+        r1_matrix = r1.as_matrix()
+        v_est = np.dot(r1_matrix, w)
+
+        # Plot v_est
+        for i in range(v_est.shape[1]):
+                ax.quiver(0, 0, 0, v_est[0, i], v_est[1, i], v_est[2, i], color='g', label='v_est' if i == 0 else "")
+
+        ax.legend()
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
+        ax.set_zlabel('Z')
+        plt.show()
 
 qmethod_test()    
