@@ -36,11 +36,11 @@ def estimate_quaternion(w, v, P):
 
     return np.array([-q_[0], -q_[1], -q_[2], q_[3]])
 
-def plot_vectors(ax, origin, vectors, colors, labels):
+def plot_vectors(ax, origin, vectors, colors, labels, linestyle = "solid"):
     for i in range(vectors.shape[1]):
         ax.quiver(origin[0], origin[1], origin[2],
                   vectors[0, i], vectors[1, i], vectors[2, i],
-                  color=colors[i], label=labels[i] if i == 0 else "")
+                  color=colors[i], linestyle = linestyle, label=labels[i] if i == 0 else "")
 
 def test_estimate_quaternion():
     r0 = Rot.from_euler('zyx', [50, 0, 0], degrees=True)
@@ -56,11 +56,11 @@ def test_estimate_quaternion():
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    plot_vectors(ax, [0, 0, 0], w, ['b'], ['w'])
-    plot_vectors(ax, [0, 0, 0], v, ['r'], ['v'])
+    plot_vectors(ax, [0, 0, 0], w, ['g'], ['w'])
+    plot_vectors(ax, [0, 0, 0], v, ['b'], ['v'])
 
     v_est = np.dot(r1.as_matrix(), w)
-    plot_vectors(ax, [0, 0, 0], v_est, ['g'], ['v_est'])
+    plot_vectors(ax, [0, 0, 0], v_est, ['r'], ['v_est'], 'dashed')
 
     ax.legend()
     ax.set_xlabel('X')
