@@ -16,4 +16,5 @@ python script/qmethod.py
 # Reference  
  - 人工衛星の力学と制御ハンドブック，姿勢制御研究委員会（編）  
  - [Wahba's problem](https://en.wikipedia.org/wiki/Wahba%27s_problem)
+ - [20090924 姿勢推定と回転行列 Wahba's problem](https://www.slideshare.net/slideshow/20090924/15277938#20)
 
